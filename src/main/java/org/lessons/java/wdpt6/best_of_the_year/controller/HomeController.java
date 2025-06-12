@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.lessons.java.wdpt6.best_of_the_year.model.Movie;
+import org.lessons.java.wdpt6.best_of_the_year.model.Song;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,7 @@ public class HomeController {
         return "movies";
     }
 
+    // movie
     private List<Movie> getBestMovies(){
         ArrayList<Movie> movies = new ArrayList<>();
         movies.add(new Movie("Dunkirk",1));
@@ -39,10 +41,23 @@ public class HomeController {
         movies.add(new Movie("Memento", 6));
         return movies;
     }
+
+    // canzoni
+    private List<Song> getBestSongs(){ 
+        ArrayList<Song> songs = new ArrayList<>();
+        songs.add(new Song("Sweet Boy", 1));
+        songs.add(new Song("Florence", 2));
+        songs.add(new Song("Concrete", 3));
+        songs.add(new Song("Make me a better man", 4));
+        songs.add(new Song("Starstudded", 5));
+        songs.add(new Song("Earrings", 6));
+        songs.add(new Song("Roommates", 7));
+        return songs;
+    }
     
     @GetMapping("/songs")
     public String songsList(Model model){
-        List<Movie> songs = getBestSongs();
+        List<Song> songs = getBestSongs();
         model.addAttribute("songsList", songs.toString());
         return "songs";
     }
@@ -67,21 +82,19 @@ public class HomeController {
 
     @GetMapping("songs/{id}")
     public String singleSong(Model model, @PathVariable("id") Integer songId){
+        Boolean isSongFound = false;
+        Song song = null;
 
-
-        return "";
+        for (Song currentSong : getBestSongs()) {
+            if (currentSong.getId() == songId) {
+                isSongFound = true;
+                song = currentSong;
+                break;
+            }
+        }
+        model.addAttribute("isSongFound", isSongFound);
+        model.addAttribute("song", song);
+        return "song-details";
     }
 
-
-    private List<Movie> getBestSongs(){
-        ArrayList<Movie> songs = new ArrayList<>();
-        songs.add(new Movie("Sweet Boy",1));
-        songs.add(new Movie("Florence", 2));
-        songs.add(new Movie("Concrete", 3));
-        songs.add(new Movie("Make me a better man", 4));
-        songs.add(new Movie("Starstudded", 5));
-        songs.add(new Movie("Earrings", 6));
-        songs.add(new Movie("Roommates", 7));
-        return songs;
-    }
 }

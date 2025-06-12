@@ -4,7 +4,7 @@ public class Song {
     private Integer id;
     private String title;
 
-    public Song(Integer id, String title) {
+    public Song(String title, Integer id) {
         this.id = id;
         this.title = title;
     }
