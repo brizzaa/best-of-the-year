@@ -23,6 +23,7 @@ public class HomeController {
         return "home"; // ritorna il file in resource
     }
 
+    
     @GetMapping("/movies")
     public String moviesList(Model model){
         List<Movie> movies = getBestMovies();
@@ -30,7 +31,7 @@ public class HomeController {
         return "movies";
     }
 
-    // movie
+    // movies
     private List<Movie> getBestMovies(){
         ArrayList<Movie> movies = new ArrayList<>();
         movies.add(new Movie("Dunkirk",1));
@@ -62,7 +63,6 @@ public class HomeController {
         return "songs";
     }
 
-
     @GetMapping("movies/{id}")
     public String singleMovie(Model model, @PathVariable("id") Integer movieId){
         Boolean isMovieFound = false;
@@ -82,9 +82,10 @@ public class HomeController {
 
     @GetMapping("songs/{id}")
     public String singleSong(Model model, @PathVariable("id") Integer songId){
+        
         Boolean isSongFound = false;
         Song song = null;
-
+    
         for (Song currentSong : getBestSongs()) {
             if (currentSong.getId() == songId) {
                 isSongFound = true;
@@ -96,5 +97,4 @@ public class HomeController {
         model.addAttribute("song", song);
         return "song-details";
     }
-
 }
